@@ -1,6 +1,8 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import "./components/blocks";
+import BlockArray from "./components/blocks";
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
         >
           Learn React
         </a>
+        <BlockArray></BlockArray>
       </header>
     </div>
   );
