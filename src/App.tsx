@@ -1,8 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import "./components/blocks";
-import BubbleSortDemo from "./components/blocks";
+import SortingVisualizer from "./components/SortingVisualizer";
 
 function App() {
   return (
@@ -20,7 +19,7 @@ function App() {
         >
           Learn React
         </a>
-        <BubbleSortDemo></BubbleSortDemo>
+        <SortingVisualizer></SortingVisualizer>
       </header>
     </div>
   );
