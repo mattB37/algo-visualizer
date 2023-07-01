@@ -8,9 +8,9 @@ interface Block {
 }
 
 const randomize = () => {
-  return Array.from({ length: 10 }, (_, i) => ({
+  return Array.from({ length: 20 }, (_, i) => ({
     id: i + 1,
-    size: getRandomNumber(10, 200),
+    size: getRandomNumber(10, 300),
     highlighted: false,
     toSwap: false,
   }));
