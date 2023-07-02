@@ -2,7 +2,6 @@
 import { Block } from "../types";
 
 const bubbleSortSteps = (blocks: Block[]): Block[][] => {
-  // implementation of Bubble Sort
   let arr = [...blocks];
   let len = arr.length;
   let newSortSteps: Block[][] = [];
@@ -39,12 +38,76 @@ const bubbleSortSteps = (blocks: Block[]): Block[][] => {
   return newSortSteps;
 };
 
-// const bogoSortSteps = (blocks: Block[]): Block[][] => {
-//   // implementation of Bogo Sort
-// };
+const bogoSortSteps = (blocks: Block[]): Block[][] => {
+  let arr = blocks.slice(0, 5);
+  let len = arr.length;
+  let newSortSteps: Block[][] = [];
+
+  const isSorted = (arr: Block[]) => {
+    for (let i = 0; i < len - 1; i++) {
+      if (arr[i].size > arr[i + 1].size) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const shuffleArray = (arr: Block[]) => {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  };
+
+  while (!isSorted(arr)) {
+    for (let i = 0; i < len; i++) {
+      arr[i].toSwap = true;
+    }
+    newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+    shuffleArray(arr);
+    for (let i = 0; i < len; i++) {
+      arr[i].toSwap = false;
+    }
+    newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+  }
+
+  return newSortSteps;
+};
+
+const selectionSortSteps = (blocks: Block[]): Block[][] => {
+  let arr = [...blocks];
+  let len = arr.length;
+  let newSortSteps: Block[][] = [];
+
+  for (let i = 0; i < len - 1; i++) {
+    arr[i].toSwap = true;
+    newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+    let minElement = { val: arr[i].size, idx: i };
+    for (let j = i + 1; j < len; j++) {
+      arr[j].highlighted = true;
+      if (arr[j].size < minElement.val) {
+        minElement.val = arr[j].size;
+        minElement.idx = j;
+      }
+      newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+      arr[j].highlighted = false;
+    }
+    if (minElement.idx != i) {
+      arr[minElement.idx].toSwap = true;
+      newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+      [arr[i], arr[minElement.idx]] = [arr[minElement.idx], arr[i]];
+      newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+    }
+    arr[minElement.idx].toSwap = false;
+    arr[i].toSwap = false;
+    newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+  }
+  return newSortSteps;
+};
 
 // Export the sorting functions in an object, so they can be accessed by name
 export const sortAlgorithms = {
   "Bubble Sort": bubbleSortSteps,
-  //   bogoSortSteps,
+  "Bogo Sort": bogoSortSteps,
+  "Selection Sort": selectionSortSteps,
 };
