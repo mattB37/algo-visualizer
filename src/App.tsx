@@ -1,16 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
+import "./styles/App.css";
 import SortingVisualizer from "./components/SortingVisualizer";
-
-function Home() {
-  return (
-    <main>
-      <h2>Home</h2>
-      <a href="https://mattb37.github.io/sort-visualizer/">sort visualizer</a>
-    </main>
-  );
-}
+import Home from "./pages/home";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
@@ -18,17 +11,28 @@ function App() {
       <Routes>
         <Route path="/algo-visualizer" element={<Home />} />
         <Route
-          path="/sort-visualizer"
+          path="/algo-visualizer/sort-visualizer"
           element={
-            <div className="App">
-              <header className="App-header">
+            <div>
+              <NavBar></NavBar>
+              <div className="App">
                 <p>Basic Sorting Visualizer</p>
                 <SortingVisualizer />
-              </header>
+              </div>
             </div>
           }
         />
-        <Route path="/graph-visualizer" element={<Home />} />
+        <Route
+          path="/algo-visualizer/graph-visualizer"
+          element={
+            <div>
+              <NavBar></NavBar>
+              <div>
+                <h1 className="App">Coming Soon</h1>
+              </div>
+            </div>
+          }
+        />
       </Routes>
     </Router>
   );
