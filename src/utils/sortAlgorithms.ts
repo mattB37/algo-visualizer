@@ -92,7 +92,7 @@ const selectionSortSteps = (blocks: Block[]): Block[][] => {
       newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
       arr[j].highlighted = false;
     }
-    if (minElement.idx != i) {
+    if (minElement.idx !== i) {
       arr[minElement.idx].toSwap = true;
       newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
       [arr[i], arr[minElement.idx]] = [arr[minElement.idx], arr[i]];
