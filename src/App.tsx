@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import "./styles/App.css";
 import SortingVisualizer from "./components/SortingVisualizer";
 import Home from "./pages/home";
