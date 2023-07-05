@@ -1,5 +1,5 @@
 import React from "react";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import "./styles/App.css";
 import SortingVisualizer from "./components/SortingVisualizer";
 import Home from "./pages/home";
@@ -7,11 +7,11 @@ import NavBar from "./components/NavBar";
 
 function App() {
   return (
-    <Router>
+    <HashRouter basename="/">
       <Routes>
-        <Route path="algo-visualizer" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route
-          path="algo-visualizer/sort-visualizer"
+          path="/sort-visualizer"
           element={
             <div>
               <NavBar></NavBar>
@@ -23,7 +23,7 @@ function App() {
           }
         />
         <Route
-          path="algo-visualizer/graph-visualizer"
+          path="/graph-visualizer"
           element={
             <div>
               <NavBar></NavBar>
@@ -34,7 +34,7 @@ function App() {
           }
         />
       </Routes>
-    </Router>
+    </HashRouter>
   );
 }
 
