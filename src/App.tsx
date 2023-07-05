@@ -9,9 +9,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/algo-visualizer" element={<Home />} />
+        <Route path="algo-visualizer" element={<Home />} />
         <Route
-          path="/algo-visualizer/sort-visualizer"
+          path="algo-visualizer/sort-visualizer"
           element={
             <div>
               <NavBar></NavBar>
@@ -23,7 +23,7 @@ function App() {
           }
         />
         <Route
-          path="/algo-visualizer/graph-visualizer"
+          path="algo-visualizer/graph-visualizer"
           element={
             <div>
               <NavBar></NavBar>
