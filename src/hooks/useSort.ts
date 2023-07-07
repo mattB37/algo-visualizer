@@ -19,7 +19,7 @@ const useSort = (algorithmName: keyof typeof sortAlgorithms, speed: number) => {
   };
 
   useEffect(() => {
-    console.log(steps.length);
+    // console.log(steps.length);
     if (steps.length > 0) {
       const timer = setTimeout(() => {
         setBlocks(steps[0]);

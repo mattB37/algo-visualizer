@@ -105,9 +105,36 @@ const selectionSortSteps = (blocks: Block[]): Block[][] => {
   return newSortSteps;
 };
 
+const insertionSortSteps = (blocks: Block[]): Block[][] => {
+  let arr = [...blocks];
+  let len = arr.length;
+  let newSortSteps: Block[][] = [];
+  for (let i = 1; i < len; i++) {
+    let j = i;
+    arr[i].highlighted = true;
+    newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+    arr[i].highlighted = false;
+    while (j > 0 && arr[j - 1].size > arr[j].size) {
+      arr[j - 1].highlighted = true;
+      arr[j].toSwap = true;
+      newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+
+      [arr[j - 1], arr[j]] = [arr[j], arr[j - 1]];
+
+      arr[j].highlighted = false;
+      arr[j - 1].toSwap = false;
+      newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+      j -= 1;
+    }
+    newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+  }
+  return newSortSteps;
+};
+
 // Export the sorting functions in an object, so they can be accessed by name
 export const sortAlgorithms = {
   "Bubble Sort": bubbleSortSteps,
   "Bogo Sort": bogoSortSteps,
   "Selection Sort": selectionSortSteps,
+  "Insertion Sort": insertionSortSteps,
 };
