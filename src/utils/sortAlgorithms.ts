@@ -131,10 +131,68 @@ const insertionSortSteps = (blocks: Block[]): Block[][] => {
   return newSortSteps;
 };
 
+const mergeSortSteps = (blocks: Block[]): Block[][] => {
+  let arr = [...blocks];
+  let workArr = arr.map((block) => ({ ...block }));
+  let len = arr.length;
+  let newSortSteps: Block[][] = [];
+
+  newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+
+  const merge = (
+    A: Block[],
+    left: number,
+    right: number,
+    end: number,
+    B: Block[]
+  ) => {
+    let i = left;
+    let j = right;
+    for (let k = left; k < end; k++) {
+      if (i < right && (j >= end || arr[i].size <= arr[j].size)) {
+        B[k] = A[i];
+        i = i + 1;
+      } else {
+        B[k] = A[j];
+        j = j + 1;
+      }
+      B[k].highlighted = true;
+    }
+    newSortSteps.push(B.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+  };
+
+  const copy = (A: Block[], B: Block[]) => {
+    for (let i = 0; i < len; i++) {
+      A[i] = B[i];
+      A[i].highlighted = false;
+    }
+    newSortSteps.push(A.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+  };
+
+  for (let width = 1; width < len; width *= 2) {
+    for (let i = 0; i < len; i = i + 2 * width) {
+      merge(
+        arr,
+        i,
+        Math.min(i + width, len),
+        Math.min(i + 2 * width, len),
+        workArr
+      );
+    }
+    copy(arr, workArr);
+    newSortSteps.push(workArr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+  }
+
+  newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+
+  return newSortSteps;
+};
+
 // Export the sorting functions in an object, so they can be accessed by name
 export const sortAlgorithms = {
   "Bubble Sort": bubbleSortSteps,
   "Bogo Sort": bogoSortSteps,
   "Selection Sort": selectionSortSteps,
   "Insertion Sort": insertionSortSteps,
+  "Merge Sort (iterative)": mergeSortSteps,
 };

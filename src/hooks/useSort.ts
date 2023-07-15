@@ -4,13 +4,17 @@ import { sortAlgorithms } from "../utils/sortAlgorithms";
 import { randomize } from "../utils/utils";
 import { Block } from "../types";
 
-const useSort = (algorithmName: keyof typeof sortAlgorithms, speed: number) => {
-  const [blocks, setBlocks] = useState(randomize());
+const useSort = (
+  algorithmName: keyof typeof sortAlgorithms,
+  speed: number,
+  count: number
+) => {
+  const [blocks, setBlocks] = useState(randomize(count));
   const [steps, setSteps] = useState<Block[][]>([]);
   const [isSorting, setIsSorting] = useState(false);
 
   const randomizeBlocks = () => {
-    setBlocks(randomize());
+    setBlocks(randomize(count));
   };
 
   const generateSteps = () => {

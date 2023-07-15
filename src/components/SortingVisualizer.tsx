@@ -8,9 +8,11 @@ type AlgorithmName = keyof typeof sortAlgorithms;
 const SortingVisualizer: React.FC = () => {
   const [algorithm, setAlgorithm] = useState<AlgorithmName>("Bubble Sort");
   const [speed, setSpeed] = useState(1);
+  const [count, setCount] = useState(8);
   const { blocks, generateSteps, isSorting, randomizeBlocks } = useSort(
     algorithm,
-    speed
+    speed,
+    count
   );
 
   return (
@@ -56,6 +58,18 @@ const SortingVisualizer: React.FC = () => {
       >
         Randomize Array
       </button>
+      <div>
+        <label className="text-black bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+          Blocks: {count}
+          <input
+            type="range"
+            value={count}
+            min={4}
+            max={30}
+            onChange={(e) => setCount(Number(e.target.value))}
+          />
+        </label>
+      </div>
     </div>
   );
 };
