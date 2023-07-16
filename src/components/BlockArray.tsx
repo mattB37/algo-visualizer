@@ -16,7 +16,9 @@ const BlockArray: React.FC<BlockArrayProps> = ({ blocks }) => (
         style={{
           height: `${block.size}px`,
           width: block.width,
-          backgroundColor: block.highlighted
+          backgroundColor: block.pivot
+            ? "black"
+            : block.highlighted
             ? "red"
             : block.toSwap
             ? "green"

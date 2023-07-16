@@ -12,5 +12,6 @@ export const randomize = (count: number) => {
     width: "30px",
     highlighted: false,
     toSwap: false,
+    pivot: false,
   }));
 };

@@ -188,6 +188,59 @@ const mergeSortSteps = (blocks: Block[]): Block[][] => {
   return newSortSteps;
 };
 
+const quickSortSteps = (blocks: Block[]): Block[][] => {
+  let arr = [...blocks];
+  let len = arr.length;
+  let newSortSteps: Block[][] = [];
+
+  newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+
+  const qs = (A: Block[], lo: number, hi: number) => {
+    if (lo >= hi || lo < 0) {
+      return;
+    }
+    let p = partition(A, lo, hi);
+    qs(A, lo, p - 1);
+    qs(A, p + 1, hi);
+  };
+
+  const partition = (A: Block[], lo: number, hi: number) => {
+    let pivot = A[hi].size;
+    A[hi].pivot = true;
+    newSortSteps.push(A.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+    let i = lo - 1;
+    for (let j = lo; j < hi; j++) {
+      if (A[j].size <= pivot) {
+        i += 1;
+        A[i].toSwap = true;
+        A[j].highlighted = true;
+        newSortSteps.push(A.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+        [A[i], A[j]] = [A[j], A[i]];
+        newSortSteps.push(A.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+        A[j].toSwap = false;
+        A[i].highlighted = false;
+      }
+    }
+    i += 1;
+    A[hi].pivot = false;
+    newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+    A[i].toSwap = true;
+    A[hi].toSwap = true;
+    newSortSteps.push(A.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+    [A[i], A[hi]] = [A[hi], A[i]];
+    A[i].toSwap = false;
+    A[hi].toSwap = false;
+    newSortSteps.push(A.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+    return i;
+  };
+
+  qs(arr, 0, len - 1);
+
+  newSortSteps.push(arr.map((block) => ({ ...block }))); // push a deep copy of the array to the steps
+
+  return newSortSteps;
+};
+
 // Export the sorting functions in an object, so they can be accessed by name
 export const sortAlgorithms = {
   "Bubble Sort": bubbleSortSteps,
@@ -195,4 +248,5 @@ export const sortAlgorithms = {
   "Selection Sort": selectionSortSteps,
   "Insertion Sort": insertionSortSteps,
   "Merge Sort (iterative)": mergeSortSteps,
+  "Quick Sort": quickSortSteps,
 };

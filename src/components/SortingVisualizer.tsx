@@ -67,6 +67,7 @@ const SortingVisualizer: React.FC = () => {
             min={4}
             max={30}
             onChange={(e) => setCount(Number(e.target.value))}
+            disabled={isSorting}
           />
         </label>
       </div>

@@ -4,4 +4,5 @@ export type Block = {
   width: string;
   highlighted: boolean;
   toSwap: boolean;
+  pivot: boolean;
 };
