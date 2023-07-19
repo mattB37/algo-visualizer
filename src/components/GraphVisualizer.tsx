@@ -1,5 +1,5 @@
 //GraphVisualizer.tsx
-import React, { useState, useCallback, useMemo, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { graphAlgorithms } from "../utils/graphAlgorithms";
 import ReactFlow, {
   addEdge,
@@ -15,22 +15,22 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import CustomNode from "./CustomNode";
-import { GraphStorage } from "../types";
+import { GraphStorage, CustomNodeData } from "../types";
 import { sparseInitialEdges, sparseInitialNodes } from "../utils/presetGraphs";
 import { generateRandomGraph } from "../utils/randomGraphGen";
 
-const initialNodes: Node[] = [
+const initialNodes: Node<CustomNodeData>[] = [
   {
     id: "1",
     type: "nodeVis",
-    data: { value: 1, startNode: true, visited: false },
+    data: { value: 1, startNode: true, visited: false, visiting: false },
     position: { x: 5, y: 5 },
     className: "circle",
   },
   {
     id: "2",
     type: "nodeVis",
-    data: { value: 2, startNode: false, visited: false },
+    data: { value: 2, startNode: false, visited: false, visiting: false },
     position: { x: 5, y: 100 },
     className: "circle",
   },
@@ -45,6 +45,7 @@ const initialEdges: Edge[] = [
 ];
 
 type AlgorithmName = keyof typeof graphAlgorithms;
+const nodeTypes = { nodeVis: CustomNode };
 
 const GraphVisualizer: React.FC = () => {
   const [algorithm, setAlgorithm] = useState<AlgorithmName>(
@@ -52,9 +53,8 @@ const GraphVisualizer: React.FC = () => {
   );
   const [speed, setSpeed] = useState(1);
 
-  const [nodes, setNodes] = useState<Node[]>(initialNodes);
+  const [nodes, setNodes] = useState<Node<CustomNodeData>[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
-  const nodeTypes = useMemo(() => ({ nodeVis: CustomNode }), []);
 
   const [steps, setSteps] = useState<GraphStorage[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -110,7 +110,7 @@ const GraphVisualizer: React.FC = () => {
       {
         id: "1",
         type: "nodeVis",
-        data: { value: 1, startNode: true },
+        data: { value: 1, startNode: true, visited: false, visiting: false },
         position: { x: 5, y: 5 },
         className: "circle",
       },
@@ -127,6 +127,7 @@ const GraphVisualizer: React.FC = () => {
         }}
       >
         <ReactFlow
+          key="react-flow-graph"
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}

@@ -10,7 +10,13 @@ export type Block = {
 };
 
 //types.ts
+export interface CustomNodeData {
+  value: number;
+  startNode: boolean;
+  visited: boolean;
+  visiting: boolean;
+}
 export type GraphStorage = {
-  nodes: Node[];
+  nodes: Node<CustomNodeData>[];
   edges: Edge[];
 };

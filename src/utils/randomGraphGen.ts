@@ -30,7 +30,12 @@ export function generateRandomGraph() {
     const node: Node = {
       id: i.toString(),
       type: "nodeVis",
-      data: { value: i, startNode: true ? i === 1 : false, visited: false },
+      data: {
+        value: i,
+        startNode: true ? i === 1 : false,
+        visited: false,
+        visiting: false,
+      },
       position: { x, y },
       className: "circle",
     };
@@ -39,7 +44,7 @@ export function generateRandomGraph() {
   }
 
   const numEdges = randomNumberInRange(nodeCount, nodeCount * nodeCount);
-  console.log(numEdges);
+  // console.log(numEdges);
 
   const existingEdges = new Set(); // Keep track of existing edges
 

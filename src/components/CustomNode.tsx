@@ -1,19 +1,16 @@
 import React from "react";
 import { Handle, Position, NodeProps } from "reactflow";
-
-interface CustomNodeData {
-  value: number;
-  startNode: boolean;
-  visited: boolean;
-}
+import { CustomNodeData } from "../types";
 
 const CustomNode: React.FC<NodeProps<CustomNodeData>> = ({ data }) => {
   const customNodeStyle: React.CSSProperties = {
     borderRadius: "50%",
-    backgroundColor: data.startNode
-      ? "green"
-      : data.visited
+    backgroundColor: data.visiting
       ? "yellow"
+      : data.visited
+      ? "red"
+      : data.startNode
+      ? "green"
       : "lightblue",
     border: "5px solid black",
     width: "100px",
