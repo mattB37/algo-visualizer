@@ -1,3 +1,5 @@
+import { Node, Edge } from "reactflow";
+
 export type Block = {
   id: number;
   size: number;
@@ -5,4 +7,10 @@ export type Block = {
   highlighted: boolean;
   toSwap: boolean;
   pivot: boolean;
+};
+
+//types.ts
+export type GraphStorage = {
+  nodes: Node[];
+  edges: Edge[];
 };

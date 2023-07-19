@@ -4,6 +4,7 @@ import "./styles/App.css";
 import SortingVisualizer from "./components/SortingVisualizer";
 import Home from "./pages/home";
 import NavBar from "./components/NavBar";
+import GraphVisualizer from "./components/GraphVisualizer";
 
 function App() {
   return (
@@ -27,8 +28,13 @@ function App() {
           element={
             <div>
               <NavBar></NavBar>
-              <div>
-                <h1 className="App">Coming Soon</h1>
+              <div className="App">
+                <p>Basic Graph Visualizer</p>
+                <GraphVisualizer />
+                <p>
+                  The green node is the starting node (no way to change this
+                  yet).
+                </p>
               </div>
             </div>
           }
