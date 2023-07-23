@@ -42,8 +42,8 @@ function App() {
                     nodes where distance is euclidean distance from x,y position
                     of nodes.
                     <br />
-                    The dfs is recursive which is why there is no values in the
-                    stack during traversal visualization.
+                    The dfs is recursive which is why there are no values in the
+                    stack during visualization.
                   </p>
                 </div>
               </div>
