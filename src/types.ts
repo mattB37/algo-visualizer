@@ -16,7 +16,10 @@ export interface CustomNodeData {
   visited: boolean;
   visiting: boolean;
 }
-export type GraphStorage = {
+export type VisualizationStorage = {
   nodes: Node<CustomNodeData>[];
   edges: Edge[];
+  stack: number[];
+  queue: number[];
+  distanceArr: number[];
 };

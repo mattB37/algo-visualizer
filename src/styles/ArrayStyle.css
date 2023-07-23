@@ -1,0 +1,20 @@
+/* styles/styles.css */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Add your custom styles here */
+.array-display {
+  display: flex;
+  align-items: flex-start;
+}
+
+.array-values {
+  display: flex;
+}
+
+.array-values li {
+  list-style: none;
+  padding: 0.25rem;
+  border: 1px solid #000;
+}

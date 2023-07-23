@@ -1,6 +1,6 @@
 //graphAlgorithms.ts
 import { Node, Edge } from "reactflow";
-import { CustomNodeData, GraphStorage } from "../types";
+import { CustomNodeData, VisualizationStorage } from "../types";
 
 type AdjacencyList = Map<string, number[]>;
 
@@ -26,12 +26,12 @@ function createAdjList(
 const BFSSteps = (
   nodes: Node<CustomNodeData>[],
   edges: Edge[]
-): GraphStorage[] => {
+): VisualizationStorage[] => {
   const adj = createAdjList(nodes, edges);
   const startNode = "1";
   const q: string[] = [];
   const visited = new Set<string>();
-  const newSearchSteps: GraphStorage[] = [];
+  const newSearchSteps: VisualizationStorage[] = [];
 
   const bfsIterative = () => {
     while (q.length > 0) {
@@ -45,6 +45,9 @@ const BFSSteps = (
         newSearchSteps.push({
           nodes: nodes.map((node) => ({ ...node, data: { ...node.data } })),
           edges: edges.map((edge) => ({ ...edge })),
+          stack: [],
+          queue: q.map((v) => parseInt(v, 10)),
+          distanceArr: [],
         });
 
         for (const neighbor of adj.get(n)!) {
@@ -57,6 +60,9 @@ const BFSSteps = (
         newSearchSteps.push({
           nodes: nodes.map((node) => ({ ...node, data: { ...node.data } })),
           edges: edges.map((edge) => ({ ...edge })),
+          stack: [],
+          queue: q.map((v) => parseInt(v, 10)),
+          distanceArr: [],
         });
         for (const neighbor of adj.get(n)!) {
           if (visited.has(neighbor.toString())) {
@@ -73,6 +79,9 @@ const BFSSteps = (
   newSearchSteps.push({
     nodes: nodes.map((node) => ({ ...node, data: { ...node.data } })),
     edges: edges.map((edge) => ({ ...edge })),
+    stack: [],
+    queue: q.map((v) => parseInt(v, 10)),
+    distanceArr: [],
   });
   bfsIterative();
 
@@ -86,6 +95,9 @@ const BFSSteps = (
     newSearchSteps.push({
       nodes: nodes.map((node) => ({ ...node, data: { ...node.data } })),
       edges: edges.map((edge) => ({ ...edge })),
+      stack: [],
+      queue: q.map((v) => parseInt(v, 10)),
+      distanceArr: [],
     });
     bfsIterative();
   }
@@ -96,11 +108,11 @@ const BFSSteps = (
 const DFSSteps = (
   nodes: Node<CustomNodeData>[],
   edges: Edge[]
-): GraphStorage[] => {
+): VisualizationStorage[] => {
   const adj = createAdjList(nodes, edges);
   const startNode = "1";
   const visited = new Set<string>();
-  const newSearchSteps: GraphStorage[] = [];
+  const newSearchSteps: VisualizationStorage[] = [];
 
   const dfsRecursive = (n: string) => {
     if (!n) {
@@ -111,6 +123,9 @@ const DFSSteps = (
     newSearchSteps.push({
       nodes: nodes.map((node) => ({ ...node, data: { ...node.data } })),
       edges: edges.map((edge) => ({ ...edge })),
+      stack: [],
+      queue: [],
+      distanceArr: [],
     });
     for (const neighbor of adj.get(n)!) {
       if (visited.has(neighbor.toString())) {
@@ -124,6 +139,9 @@ const DFSSteps = (
     newSearchSteps.push({
       nodes: nodes.map((node) => ({ ...node, data: { ...node.data } })),
       edges: edges.map((edge) => ({ ...edge })),
+      stack: [],
+      queue: [],
+      distanceArr: [],
     });
   };
 
@@ -142,7 +160,7 @@ const DFSSteps = (
 const DijkstraSteps = (
   nodes: Node<CustomNodeData>[],
   edges: Edge[]
-): GraphStorage[] => {
+): VisualizationStorage[] => {
   const nodesMap: Map<string, Node<CustomNodeData>> = nodes.reduce(
     (map, node) => {
       map.set(node.data.value.toString(), node);
@@ -152,13 +170,11 @@ const DijkstraSteps = (
   );
   const adj = createAdjList(nodes, edges);
   const startNode = "1";
-  const targetNode = nodes[nodes.length - 1].data.value.toString();
-  console.log(targetNode);
   const visited = new Set<string>();
   const dist: Map<string, number> = new Map();
   const prev: Map<string, string> = new Map();
   const q: number[] = [];
-  const newSearchSteps: GraphStorage[] = [];
+  const newSearchSteps: VisualizationStorage[] = [];
 
   const removeMinFromArray = (arr: number[]) => {
     const min = Math.min(...arr);
@@ -197,6 +213,9 @@ const DijkstraSteps = (
     newSearchSteps.push({
       nodes: nodes.map((node) => ({ ...node, data: { ...node.data } })),
       edges: edges.map((edge) => ({ ...edge })),
+      distanceArr: Array.from(dist.values()),
+      stack: [],
+      queue: q.map((v) => v),
     });
 
     for (const neighbor of adj.get(u)!) {
@@ -213,6 +232,9 @@ const DijkstraSteps = (
     newSearchSteps.push({
       nodes: nodes.map((node) => ({ ...node, data: { ...node.data } })),
       edges: edges.map((edge) => ({ ...edge })),
+      distanceArr: Array.from(dist.values()),
+      stack: [],
+      queue: q.map((v) => v),
     });
     for (const neighbor of adj.get(u)!) {
       if (visited.has(neighbor.toString())) {

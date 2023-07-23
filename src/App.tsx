@@ -30,11 +30,22 @@ function App() {
               <NavBar></NavBar>
               <div className="App">
                 <p>Basic Graph Visualizer</p>
-                <GraphVisualizer />
-                <p>
-                  The green node is the starting node (no way to change this
-                  yet).
-                </p>
+                <div className="my-4">
+                  <GraphVisualizer />
+                </div>
+                <div className="my-4">
+                  <p className="font-size:0.5rem">
+                    FAQ: The green node is always the starting node (currently
+                    no way to change this).
+                    <br />
+                    Dijkstras calculates shortest path from starting node to all
+                    nodes where distance is euclidean distance from x,y position
+                    of nodes.
+                    <br />
+                    The dfs is recursive which is why there is no values in the
+                    stack during traversal visualization.
+                  </p>
+                </div>
               </div>
             </div>
           }

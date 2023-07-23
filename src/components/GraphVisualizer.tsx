@@ -15,9 +15,10 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import CustomNode from "./CustomNode";
-import { GraphStorage, CustomNodeData } from "../types";
+import { VisualizationStorage, CustomNodeData } from "../types";
 import { sparseInitialEdges, sparseInitialNodes } from "../utils/presetGraphs";
 import { generateRandomGraph } from "../utils/randomGraphGen";
+import ArrayDisplay from "./ArrayDisplay";
 
 const initialNodes: Node<CustomNodeData>[] = [
   {
@@ -55,8 +56,11 @@ const GraphVisualizer: React.FC = () => {
 
   const [nodes, setNodes] = useState<Node<CustomNodeData>[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
+  const [stkArr, setStkArr] = useState<number[]>([]);
+  const [queueArr, setQueueArr] = useState<number[]>([]);
+  const [distArr, setDistArr] = useState<number[]>([]);
 
-  const [steps, setSteps] = useState<GraphStorage[]>([]);
+  const [steps, setSteps] = useState<VisualizationStorage[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
   const generateSteps = () => {
@@ -69,6 +73,9 @@ const GraphVisualizer: React.FC = () => {
       const timer = setTimeout(() => {
         setNodes(steps[0].nodes);
         setEdges(steps[0].edges);
+        setStkArr(steps[0].stack);
+        setQueueArr(steps[0].queue);
+        setDistArr(steps[0].distanceArr);
         setSteps(steps.slice(1));
       }, 500 / speed);
       return () => clearTimeout(timer);
@@ -125,26 +132,6 @@ const GraphVisualizer: React.FC = () => {
 
   return (
     <div>
-      <div
-        style={{
-          width: window.innerWidth / 1.5,
-          height: window.innerHeight / 1.5,
-        }}
-      >
-        <ReactFlow
-          key="react-flow-graph"
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          nodeTypes={nodeTypes}
-          fitView
-        >
-          <MiniMap />
-          <Controls />
-        </ReactFlow>
-      </div>
       <select
         className="text-black bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
         disabled={isSearching}
@@ -218,6 +205,29 @@ const GraphVisualizer: React.FC = () => {
       >
         Generate random graph
       </button>
+      <div
+        style={{
+          width: window.innerWidth / 1.5,
+          height: window.innerHeight / 1.5,
+        }}
+      >
+        <ReactFlow
+          key="react-flow-graph"
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          nodeTypes={nodeTypes}
+          fitView
+        >
+          <MiniMap />
+          <Controls />
+        </ReactFlow>
+      </div>
+      <ArrayDisplay title="Stack" array={stkArr} />
+      <ArrayDisplay title="Queue" array={queueArr} />
+      <ArrayDisplay title="Distance Array" array={distArr} />
     </div>
   );
 };
