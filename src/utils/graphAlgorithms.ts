@@ -139,8 +139,95 @@ const DFSSteps = (
   return newSearchSteps;
 };
 
+const DijkstraSteps = (
+  nodes: Node<CustomNodeData>[],
+  edges: Edge[]
+): GraphStorage[] => {
+  const nodesMap: Map<string, Node<CustomNodeData>> = nodes.reduce(
+    (map, node) => {
+      map.set(node.data.value.toString(), node);
+      return map;
+    },
+    new Map<string, Node<CustomNodeData>>()
+  );
+  const adj = createAdjList(nodes, edges);
+  const startNode = "1";
+  const targetNode = nodes[nodes.length - 1].data.value.toString();
+  console.log(targetNode);
+  const visited = new Set<string>();
+  const dist: Map<string, number> = new Map();
+  const prev: Map<string, string> = new Map();
+  const q: number[] = [];
+  const newSearchSteps: GraphStorage[] = [];
+
+  const removeMinFromArray = (arr: number[]) => {
+    const min = Math.min(...arr);
+    const index = arr.indexOf(min);
+    return arr.splice(index, 1)[0];
+  };
+  const euclidDistance = (u: string, v: string) => {
+    const nodeU = nodesMap.get(u);
+    const nodeV = nodesMap.get(v);
+
+    if (!nodeU || !nodeV) {
+      return Infinity;
+    }
+
+    const uX = nodeU.position.x;
+    const uY = nodeU.position.y;
+    const vX = nodeV.position.x;
+    const vY = nodeV.position.y;
+
+    const distance = (vX - uX) ** 2 + (vY - uY) ** 2;
+    return distance;
+  };
+
+  for (const vertex of nodes) {
+    dist.set(vertex.data.value.toString(), Infinity);
+    prev.set(vertex.data.value.toString(), "");
+    q.push(vertex.data.value);
+  }
+
+  dist.set(startNode, 0);
+
+  while (q.length > 0) {
+    const u = removeMinFromArray(q).toString(); //removes and returns the smallest element in q
+    visited.add(u);
+    nodes[parseInt(u, 10) - 1].data.visited = true;
+    newSearchSteps.push({
+      nodes: nodes.map((node) => ({ ...node, data: { ...node.data } })),
+      edges: edges.map((edge) => ({ ...edge })),
+    });
+
+    for (const neighbor of adj.get(u)!) {
+      if (visited.has(neighbor.toString())) {
+        continue;
+      }
+      nodes[neighbor - 1].data.visiting = true;
+      const newDist = dist.get(u)! + euclidDistance(u, neighbor.toString());
+      if (newDist < dist.get(neighbor.toString())!) {
+        dist.set(neighbor.toString(), newDist);
+        prev.set(neighbor.toString(), u);
+      }
+    }
+    newSearchSteps.push({
+      nodes: nodes.map((node) => ({ ...node, data: { ...node.data } })),
+      edges: edges.map((edge) => ({ ...edge })),
+    });
+    for (const neighbor of adj.get(u)!) {
+      if (visited.has(neighbor.toString())) {
+        continue;
+      }
+      nodes[neighbor - 1].data.visiting = false;
+    }
+  }
+
+  return newSearchSteps;
+};
+
 // Export the sorting functions in an object, so they can be accessed by name
 export const graphAlgorithms = {
   "Breadth First Search": BFSSteps,
   "Depth First Search": DFSSteps,
+  "Dijkstra's Algorithm": DijkstraSteps,
 };
