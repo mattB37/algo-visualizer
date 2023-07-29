@@ -21,5 +21,4 @@ export type VisualizationStorage = {
   edges: Edge[];
   stack: number[];
   queue: number[];
-  distanceArr: number[];
 };

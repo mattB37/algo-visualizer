@@ -58,7 +58,6 @@ const GraphVisualizer: React.FC = () => {
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const [stkArr, setStkArr] = useState<number[]>([]);
   const [queueArr, setQueueArr] = useState<number[]>([]);
-  const [distArr, setDistArr] = useState<number[]>([]);
 
   const [steps, setSteps] = useState<VisualizationStorage[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -75,7 +74,6 @@ const GraphVisualizer: React.FC = () => {
         setEdges(steps[0].edges);
         setStkArr(steps[0].stack);
         setQueueArr(steps[0].queue);
-        setDistArr(steps[0].distanceArr);
         setSteps(steps.slice(1));
       }, 500 / speed);
       return () => clearTimeout(timer);
@@ -227,7 +225,6 @@ const GraphVisualizer: React.FC = () => {
       </div>
       <ArrayDisplay title="Stack" array={stkArr} />
       <ArrayDisplay title="Queue" array={queueArr} />
-      <ArrayDisplay title="Distance Array" array={distArr} />
     </div>
   );
 };

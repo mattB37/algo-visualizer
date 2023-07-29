@@ -47,7 +47,6 @@ const BFSSteps = (
           edges: edges.map((edge) => ({ ...edge })),
           stack: [],
           queue: q.map((v) => parseInt(v, 10)),
-          distanceArr: [],
         });
 
         for (const neighbor of adj.get(n)!) {
@@ -62,7 +61,6 @@ const BFSSteps = (
           edges: edges.map((edge) => ({ ...edge })),
           stack: [],
           queue: q.map((v) => parseInt(v, 10)),
-          distanceArr: [],
         });
         for (const neighbor of adj.get(n)!) {
           if (visited.has(neighbor.toString())) {
@@ -81,7 +79,6 @@ const BFSSteps = (
     edges: edges.map((edge) => ({ ...edge })),
     stack: [],
     queue: q.map((v) => parseInt(v, 10)),
-    distanceArr: [],
   });
   bfsIterative();
 
@@ -97,7 +94,6 @@ const BFSSteps = (
       edges: edges.map((edge) => ({ ...edge })),
       stack: [],
       queue: q.map((v) => parseInt(v, 10)),
-      distanceArr: [],
     });
     bfsIterative();
   }
@@ -125,7 +121,6 @@ const DFSSteps = (
       edges: edges.map((edge) => ({ ...edge })),
       stack: [],
       queue: [],
-      distanceArr: [],
     });
     for (const neighbor of adj.get(n)!) {
       if (visited.has(neighbor.toString())) {
@@ -141,7 +136,6 @@ const DFSSteps = (
       edges: edges.map((edge) => ({ ...edge })),
       stack: [],
       queue: [],
-      distanceArr: [],
     });
   };
 
@@ -213,7 +207,6 @@ const DijkstraSteps = (
     newSearchSteps.push({
       nodes: nodes.map((node) => ({ ...node, data: { ...node.data } })),
       edges: edges.map((edge) => ({ ...edge })),
-      distanceArr: Array.from(dist.values()),
       stack: [],
       queue: q.map((v) => v),
     });
@@ -232,7 +225,6 @@ const DijkstraSteps = (
     newSearchSteps.push({
       nodes: nodes.map((node) => ({ ...node, data: { ...node.data } })),
       edges: edges.map((edge) => ({ ...edge })),
-      distanceArr: Array.from(dist.values()),
       stack: [],
       queue: q.map((v) => v),
     });
